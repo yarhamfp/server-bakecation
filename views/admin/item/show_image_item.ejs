@@ -35,8 +35,8 @@
     <div class="col-md-4">
       <div class="card shadow mb-4 mt-2">
         <div class="card-body">
-          <img src="http://localhost:3000/<%= item.imageId[x].imageUrl %> " class="mb-2" alt="Image Item"
-            style="width: 100%; display: block;">
+          <img src="http://admin-bakecation.herokuapp.com/<%= item.imageId[x].imageUrl %> " class="mb-2"
+            alt="Image Item" style="width: 100%; display: block;">
           <form action="/admin/item/<%= item._id %>/image/<%= item.imageId[x]._id %>?_method=DELETE" method="POST">
             <a href="javascript:void()" class="btn btn-warning btn-circle btn-sm button-update" data-toggle="modal"
               data-id="<%= item.imageId[x]._id %>">
