@@ -1,0 +1,65 @@
+<div class="card shadow mb-4 mt-2">
+  <div class="card-header py-3">
+    <div class="row">
+      <div class="col-md-4">
+        <a href="/admin/booking" class="btn btn-primary btn-sm"><i class="fas fa-arrow-left"></i> Back</a>
+      </div>
+      <div class="col-md-8">
+        <% if(booking.payments.status == 'Proses') { %>
+        <div class="row" style="float: right;">
+          <form action="/admin/booking/<%= booking.id %>/confirmation?_method=PUT" method="POST">
+            <button onclick="return confirm('Kamu yakin ingin melakukan konfirmasi?');" type="submit"
+              class="btn btn-success btn-sm"><i class=" fas fa-check"></i> Confirmation</button>
+          </form>
+          <form action="/admin/booking/<%= booking.id %>/reject?_method=PUT" method="POST" class="ml-5">
+            <button onclick="return confirm('Kamu yakin ingin menolak ini?');" type="submit"
+              class="btn btn-secondary btn-sm"><i class=" fas fa-times"></i> Reject</button>
+          </form>
+        </div>
+        <% } else if(booking.payments.status == 'Accept') { %>
+        Status : <span class="badge badge-success"><i class="fas fa-check"> Sudah Dikonfirmasi</i></span>
+        <% } else { %>
+        Status : <span class="badge badge-danger"><i class="fas fa-times"> Sudah Ditolak</i></span>
+        <% } %>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-4">
+        <img src="http://localhost:3000/<%= booking.payments.proofPayment %> " class="mb-2" alt="Image Item"
+          style="width: 100%; display: block;">
+      </div>
+      <div class="col-md-8">
+        <div class="table-responsive">
+          <table class="table table-bordered" id="dataTableActivity" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Name Member</th>
+                <th>Title</th>
+                <th>Bank Form</th>
+                <th>Total Bayar </th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <th>Name Member</th>
+                <th>Title</th>
+                <th>Bank Form</th>
+                <th>Total Bayar </th>
+              </tr>
+            </tfoot>
+            <tbody>
+              <tr>
+                <td><%= booking.memberId.firstName %> <%= booking.memberId.lastName %></td>
+                <td><%= booking.itemId.title %></td>
+                <td><%= booking.payments.bankFrom %></td>
+                <td>$ <%= booking.total %></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
