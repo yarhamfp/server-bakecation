@@ -9,25 +9,24 @@ const Booking = require("../models/Booking");
 const Member = require("../models/Member");
 const fs = require("fs-extra");
 const path = require("path");
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
 
 module.exports = {
-
   viewSignin: async (req, res) => {
     try {
-      const alertMessage = req.flash('alertMessage');
-      const alertStatus = req.flash('alertStatus');
+      const alertMessage = req.flash("alertMessage");
+      const alertStatus = req.flash("alertStatus");
       const alert = { message: alertMessage, status: alertStatus };
       if (req.session.user == null || req.session.user == undefined) {
-        res.render('index', {
+        res.render("index", {
           alert,
-          title: "Staycation | Login"
+          title: "Bakecation | Login",
         });
       } else {
-        res.redirect('/admin/dashboard');
+        res.redirect("/admin/dashboard");
       }
     } catch (error) {
-      res.redirect('/admin/signin');
+      res.redirect("/admin/signin");
     }
   },
 
@@ -36,32 +35,31 @@ module.exports = {
       const { username, password } = req.body;
       const user = await Users.findOne({ username: username });
       if (!user) {
-        req.flash('alertMessage', 'User yang anda masukan tidak ada!!');
-        req.flash('alertStatus', 'danger');
-        res.redirect('/admin/signin');
+        req.flash("alertMessage", "User yang anda masukan tidak ada!!");
+        req.flash("alertStatus", "danger");
+        res.redirect("/admin/signin");
       }
       const isPasswordMatch = await bcrypt.compare(password, user.password);
       if (!isPasswordMatch) {
-        req.flash('alertMessage', 'Password yang anda masukan tidak cocok!!');
-        req.flash('alertStatus', 'danger');
-        res.redirect('/admin/signin');
+        req.flash("alertMessage", "Password yang anda masukan tidak cocok!!");
+        req.flash("alertStatus", "danger");
+        res.redirect("/admin/signin");
       }
 
       req.session.user = {
         id: user.id,
-        username: user.username
-      }
+        username: user.username,
+      };
 
-      res.redirect('/admin/dashboard');
-
+      res.redirect("/admin/dashboard");
     } catch (error) {
-      res.redirect('/admin/signin');
+      res.redirect("/admin/signin");
     }
   },
 
   actionLogout: (req, res) => {
     req.session.destroy();
-    res.redirect('/admin/signin');
+    res.redirect("/admin/signin");
   },
 
   viewDashborad: async (req, res) => {
@@ -78,7 +76,7 @@ module.exports = {
         item,
       });
     } catch (error) {
-      res.redirect('/admin/dashboard');
+      res.redirect("/admin/dashboard");
     }
   },
 
@@ -93,5 +91,4 @@ module.exports = {
   // activity
 
   // booking
-
 };
