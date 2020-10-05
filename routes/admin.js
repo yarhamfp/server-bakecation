@@ -1,6 +1,7 @@
 const router = require('express').Router();
 // controller
 const adminController = require('../controllers/adminController');
+const userController = require('../controllers/userController');
 const categoryController = require('../controllers/categoryController');
 const bankController = require('../controllers/bankController');
 const itemController = require('../controllers/itemController');
@@ -16,6 +17,10 @@ router.post('/signin', adminController.actionSignin);
 router.use(auth);
 router.get('/logout', adminController.actionLogout);
 router.get('/dashboard', adminController.viewDashborad);
+// endpoint user
+router.get('/user/:id', userController.viewUser);
+router.put('/user/update/:id', uploadSingle, userController.editUser);
+router.put('/user/foto/:id', userController.deleteFotoUser);
 // endpoint category
 router.get('/category', categoryController.viewCategory);
 router.post('/category/add', categoryController.addCategory);

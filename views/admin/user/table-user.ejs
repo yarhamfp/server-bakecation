@@ -1,0 +1,82 @@
+<div class="row">
+
+  <!-- Area Chart -->
+  <div class="col-xl-4 col-lg-5">
+    <div class="card shadow mb-4">
+      <img class="card-img-top" <% if(userP.imageUrl == null) { %>
+        src="https://ui-avatars.com/api/?name=<%= user.username %>&size=300&background=39ac73&color=fff " <% } %>
+        src="http://admin-bakecation.herokuapp.com/<%= userP.imageUrl%>" alt="Card image cap">
+      <div class="card-body mb-4">
+        <h5 class="card-title"><%= userP.name %> </h5>
+        <p class="card-text"><%= userP.about %> </p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><i class="fas fa-phone"></i> <%= userP.telepon %> </li>
+        <li class="list-group-item"><i class="fas fa-envelope"></i> <%= userP.email %> </li>
+        <li class="list-group-item"><i class="fab fa-facebook-f"></i> <%= userP.facebook %></li>
+        <li class="list-group-item"><i class="fab fa-instagram"></i> <%= userP.instagram %></li>
+        <li class="list-group-item"><i class="fab fa-github"></i> <%= userP.github %></li>
+      </ul>
+      <div class="card-body">
+        <%if(userP.imageUrl) { %>
+        <form action="/admin/user/foto/<%= userP._id %>?_method=PUT" method="POST">
+          <button type="submit" class="btn btn-primary">Delete Foto</button>
+        </form>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pie Chart -->
+  <div class="col-xl-8 col-lg-7">
+    <div class="card shadow mb-4">
+      <!-- Card Header - Dropdown -->
+      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">Data User</h6>
+      </div>
+      <!-- Card Body -->
+      <div class="card-body">
+        <form action="/admin/user/update/<%= userP._id %>?_method=PUT " method="POST" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="">Name</label>
+            <input type="text" value="<%= userP.name%>" name="name" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="">Username</label>
+            <input type="text" value="<%= userP.username%>" name="username" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="">Email</label>
+            <input type="email" value="<%= userP.email%>" name="email" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="">Telepon</label>
+            <input type="text" value="<%= userP.telepon%>" name="telepon" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="">Facebook</label>
+            <input type="text" value="<%= userP.facebook%>" name="facebook" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="">Instagram</label>
+            <input type="text" value="<%= userP.instagram%>" name="instagram" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="">Github</label>
+            <input type="text" value="<%= userP.github%>" name="github" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="">About</label>
+            <textarea name="about" class="form-control" id="" cols="30" rows="10"> <%= userP.about%></textarea>
+          </div>
+          <div class="form-group">
+            <label for="">Image</label>
+            <input type="file" class="form-control" name="image">
+          </div>
+          <button type="submit" class="btn btn-primary btn-sm" style="float: right;"><i class="fa fa-upload"></i>
+            Update</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

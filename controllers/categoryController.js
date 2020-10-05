@@ -3,7 +3,10 @@ const Category = require("../models/Category");
 module.exports = {
   viewCategory: async (req, res) => {
     try {
-      const category = await Category.find();
+      const category = await Category.find().populate({
+        path: "itemId",
+        select: "_id",
+      });
       const alertMessage = req.flash("alertMessage");
       const alertStatus = req.flash("alertStatus");
       const alert = { message: alertMessage, status: alertStatus };
@@ -53,15 +56,24 @@ module.exports = {
   deleteCategory: async (req, res) => {
     try {
       const { id } = req.params;
-      const category = await Category.findOne({ _id: id });
-      await category.remove();
-      req.flash("alertMessage", "Success delete category!");
-      req.flash("alertStatus", "danger");
-      res.redirect("/admin/category");
+      const category = await Category.findOne({ _id: id }).populate({
+        path: "itemId",
+        select: "_id",
+      });
+      if (category.itemId.length) {
+        req.flash("alertMessage", "Kategori ini tidak bisa dihapus karena sudah berelasi!");
+        req.flash("alertStatus", "danger");
+        res.redirect("/admin/category");
+      } else {
+        await category.remove();
+        req.flash("alertMessage", "Success delete category!");
+        req.flash("alertStatus", "success");
+        res.redirect("/admin/category");
+      }
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");
       res.redirect("/admin/category");
     }
   },
-}
+};

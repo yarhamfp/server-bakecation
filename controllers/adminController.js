@@ -10,6 +10,7 @@ const Member = require("../models/Member");
 const fs = require("fs-extra");
 const path = require("path");
 const bcrypt = require("bcryptjs");
+const { findOne } = require("../models/Item");
 
 module.exports = {
   viewSignin: async (req, res) => {
